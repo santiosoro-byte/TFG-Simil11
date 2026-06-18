@@ -25,34 +25,49 @@ Valor de mercado: Transfermarkt (vía el paquete worldfootballR).
 Salario: Capology (a través de FBref).
 
 
-El conjunto ya procesado está en data/. Los datos de origen son públicos; aquí
-se incluye el resultado del pipeline para poder reproducir el análisis.
+Temporada 2025-26. Los datos de origen son públicos; en el repositorio se incluyen
+los conjuntos ya procesados para poder reproducir el análisis.
 
-Estructura del repositorio
-
-
-index.html — herramienta web (Símil11), autocontenida.
-R/ — scripts de R del proyecto.
-data/ — conjunto de datos procesado (master_con_valor.csv, master_modelo.csv).
-figuras/ — figuras generadas por los scripts.
+Contenido del repositorio
 
 
-Cómo reproducirlo
+index.html — herramienta web (Símil11), autocontenida; se abre en el navegador.
+Scripts de R del proyecto (ver orden de ejecución más abajo).
+master_con_valor.csv — estadísticas de rendimiento y valor de mercado cruzados;
+es la entrada del análisis.
+master_modelo.csv — conjunto final del pipeline, con las 18 variables de estilo
+ya calculadas.
 
-Requiere R. Paquetes principales: tidyverse, cluster, clusterCrit, mclust,
-randomForest, factoextra, patchwork, reshape2, fmsb, worldfootballR
-(más los que utilice el ETL).
+
+Cómo ejecutarlo
+
+Requiere R (versión 4.x). Instala los paquetes una sola vez:
+
+rinstall.packages(c("tidyverse", "cluster", "clusterCrit", "mclust",
+                   "randomForest", "factoextra", "patchwork", "reshape2",
+                   "fmsb", "worldfootballR"))
+
+Descarga el repositorio en una carpeta y ejecuta R desde ella (o usa
+setwd("ruta/a/la/carpeta")), de modo que los scripts encuentren los CSV, que
+leen y escriben en el directorio de trabajo.
 
 Orden de ejecución:
 
 
-Ingeniería del Dato (ETL): lectura de las fuentes, descarga del valor de
-mercado, cruce, limpieza y análisis exploratorio. Generan master_con_valor.csv
-y master_modelo.csv.
-Modelado.R — clustering y validación. Genera clusters_asignados.csv.
-Recomendador.R — recomendaciones, validación y figuras.
+Dataset.R — lee e integra las cuatro tablas de FBref de las cinco ligas.
+Descarga_valores.R — descarga los valores de mercado de Transfermarkt.
+Valor_de_mercado.R — cruza el valor con los jugadores y genera master_con_valor.csv.
+Limpieza.R — limpieza, corrección de errores e imputación.
+EDA.R — análisis exploratorio y figuras.
+Modelado.R — clustering y validación; genera clusters_asignados.csv.
+Recomendador.R — recomendaciones, validación de roles y diagramas de telaraña.
 
 
+La herramienta web (index.html) es autocontenida: lleva los datos dentro y no
+necesita ejecutar nada para funcionar.
+Autor
+
+Santiago Osoro Brandeiro
 Autor
 
 Santiago Osoro Brandeiro
